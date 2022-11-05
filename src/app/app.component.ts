@@ -1,16 +1,25 @@
-import { Component } from '@angular/core';
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {AfterContentInit, AfterViewChecked, Component, OnInit} from '@angular/core';
+import {ApiDataService} from "./services/api-data.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Angular-Training';
-  constructor(private modalService: NgbModal) {
+  showSpinner: boolean = false;
+  apiData: any;
+  ngOnInit(): void {
+    this.showSpinner = true;
+    this.data.getPhotos().subscribe((data) => {
+      this.apiData = data.hits;
+      this.showSpinner = false;
+    });
+  //   setTimeout(() => {
+  //     this.spinnerShow = false;
+  //   }, 5000);
   }
-  public open(modal: any): void {
-    this.modalService.open(modal);
+  constructor(private data: ApiDataService) {
   }
 }
