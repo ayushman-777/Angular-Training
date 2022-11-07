@@ -1,4 +1,4 @@
-import {AfterContentInit, AfterViewChecked, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ApiDataService} from "./services/api-data.service";
 
 @Component({
@@ -8,6 +8,8 @@ import {ApiDataService} from "./services/api-data.service";
 })
 export class AppComponent implements OnInit {
   title = 'Angular-Training';
+  constructor(private data: ApiDataService) {
+  }
   showSpinner: boolean = false;
   apiData: any;
   ngOnInit(): void {
@@ -17,9 +19,7 @@ export class AppComponent implements OnInit {
       this.showSpinner = false;
     });
   //   setTimeout(() => {
-  //     this.spinnerShow = false;
+  //     this.showSpinner = false;
   //   }, 5000);
-  }
-  constructor(private data: ApiDataService) {
   }
 }

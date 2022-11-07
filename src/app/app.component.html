@@ -7,14 +7,14 @@
   <h1>{{title}}</h1>
   <h3>This is my First Task</h3>
 </div>
-<div class="container align-items-center">
-  <div class="row">
-    <div class="card m-2 col-md-2 col-sm-6 col-12" *ngFor="let img of apiData; index as i">
-      <img src="{{img.largeImageURL}}" class="card-img-top" alt="Fissure in Sandstone"/>
-      <div class="card-body">
-        <h5 class="card-title">Views: {{img.views}}</h5>
-        <p class="card-text">By: {{img.user}}</p>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="card m-2 col-md-2 col-sm-6 col-12" *ngFor="let img of apiData">
+        <img src="{{img.largeImageURL}}" class="card-img-top" alt="Fissure in Sandstone"/>
+        <div class="card-body">
+          <h5 class="card-title">Views: {{img.views}}</h5>
+          <p class="card-text">By: {{img.user}}</p>
+        </div>
       </div>
     </div>
   </div>
-</div>
