@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "learing-angular": {
+      "hosting": {
+        "Angular-Training": [
+          "learing-angular"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "learing-angular"
+  }
+}
