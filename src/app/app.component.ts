@@ -24,6 +24,7 @@ export class AppComponent implements OnInit {
   });
 
   ngOnInit() {
+    this.users = [];
     this.getUsers();
   }
 
@@ -35,10 +36,17 @@ export class AppComponent implements OnInit {
     });
   }
 
+  generateId() {
+    return Math.max(...this.users.map((o: any) => o.value.id)) + 1;
+  }
+
   createUser() {
-    this.userForm.patchValue({id: (this.users?.length + 1) || 1});
-    this.users.push(new User(this.userForm.value));
-    this.api.createUser(this.users[this.users.length - 1]);
+    this.userForm.patchValue({id: this.users?.length === 0 ? "1" : this.generateId().toString()});
+    let user = new User(this.userForm.value);
+    this.api.createUser(user).subscribe((data: any) => {
+      console.log('Unique Id: ' + data.name);
+      this.users.push({key: data.name, value: user});
+    });
     this.userForm.reset();
     this.userForm.patchValue({id: (this.users?.length + 1) || 1});
   }
@@ -48,6 +56,13 @@ export class AppComponent implements OnInit {
   }
 
   getSortedUsers() {
-    return this.users?.sort((a: { id: number; }, b: { id: number; }) => a.id - b.id);
+    return this.users?.sort((a: any, b: any) => a.value.id - b.value.id);
+  }
+
+  deleteUser(userId: any) {
+    this.api.deleteUsers(userId).subscribe(() => {
+      console.log('User deleted successfully');
+      this.users = this.users.filter((user: any) => user.key !== userId);
+    });
   }
 }

@@ -11,21 +11,22 @@ export class ApiDataService {
 
     constructor(private http: HttpClient) { }
 
-    createUser(user: User): void {
-        this.http.post(this.url + "users.json", user).subscribe((data: any) => {
-            console.log('Unique Id: ' + data.name);
-        });
+    createUser(user: User) {
+        return this.http.post(this.url + "users.json", user);
     }
     getUsers(): Observable<any> {
         return this.http.get(this.url + "users.json").pipe(map((data: any) => {
-          var users: any[] = [];
-          for (let key in data) {
-            this.http.get(this.url + "users/" + key + ".json").subscribe((data: any) => {
-              users.push(data);
-            });
+          if (data) {
+            let result = [];
+            for (let user in data) {
+              result.push({key: user, value: data[user]});
+            }
+            return  result;
           }
-          return users;
+          return data;
         }));
     }
-
+  deleteUsers(id: string) {
+    return this.http.delete(this.url + "users/" + id + ".json");
+  }
 }
