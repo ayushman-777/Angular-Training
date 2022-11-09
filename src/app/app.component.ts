@@ -41,14 +41,15 @@ export class AppComponent implements OnInit {
   }
 
   createUser() {
+    this.userForm.disable();
     this.userForm.patchValue({id: this.users?.length === 0 ? "1" : this.generateId().toString()});
     let user = new User(this.userForm.value);
     this.api.createUser(user).subscribe((data: any) => {
       console.log('Unique Id: ' + data.name);
       this.users.push({key: data.name, value: user});
+      this.userForm.reset();
+      this.userForm.enable();
     });
-    this.userForm.reset();
-    this.userForm.patchValue({id: (this.users?.length + 1) || 1});
   }
 
   showHideDetails() {
