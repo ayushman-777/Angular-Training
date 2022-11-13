@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiDataService} from "./services/api-data.service";
+import {tap} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -11,15 +12,9 @@ export class AppComponent implements OnInit {
   constructor(private data: ApiDataService) {
   }
   showSpinner: boolean = false;
-  apiData: any;
+  users$: any;
   ngOnInit(): void {
     this.showSpinner = true;
-    this.data.getPhotos().subscribe((data) => {
-      this.apiData = data.hits;
-      this.showSpinner = false;
-    });
-  //   setTimeout(() => {
-  //     this.showSpinner = false;
-  //   }, 5000);
+    this.users$ = this.data.getPhotos().pipe(tap(() => this.showSpinner = false));
   }
 }

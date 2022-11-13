@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Observable} from "rxjs";
+import {map, Observable, shareReplay} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 
 @Injectable({
@@ -11,7 +11,7 @@ export class ApiDataService {
   }
 
   getPhotos(): Observable<any> {
-    return this.http.get(this.url);
+    return this.http.get(this.url).pipe(shareReplay(1), map((data: any) => data.hits));
   }
 
 }

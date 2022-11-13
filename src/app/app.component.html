@@ -9,7 +9,7 @@
 </div>
   <div class="container">
     <div class="row justify-content-center">
-      <div class="card m-2 col-md-2 col-sm-6 col-12" *ngFor="let img of apiData">
+      <div class="card m-2 col-md-2 col-sm-6 col-12" *ngFor="let img of (users$ | async)">
         <img src="{{img.largeImageURL}}" class="card-img-top" alt="Fissure in Sandstone"/>
         <div class="card-body">
           <h5 class="card-title">Views: {{img.views}}</h5>
